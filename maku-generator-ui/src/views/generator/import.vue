@@ -1,17 +1,22 @@
 <template>
 	<el-dialog v-model="visible" title="导入数据库表" :close-on-click-modal="false" draggable>
 		<el-form ref="dataFormRef" :model="dataForm">
-			<el-form-item label="数据源" prop="datasourceId">
-				<el-select v-model="dataForm.datasourceId" style="width: 60%" placeholder="请选择数据源" @change="getTableList">
-					<el-option label="默认数据源" value="0"></el-option>
-					<el-option v-for="ds in dataForm.datasourceList" :key="ds.id" :label="ds.connName" :value="ds.id"> </el-option>
-				</el-select>
-				<!-- 表名搜索框 -->
-				<el-input v-model="state.queryForm.tableName" style="width: 30%" placeholder="表名" clearable></el-input>
-				<!-- 查询按钮 -->
-				<el-button type="primary" style="width: 10%" @click="getDataList()">查询</el-button>
-			</el-form-item>
-
+			<el-row>
+				<el-col :span="8">
+					<el-form-item label="数据源" prop="datasourceId">
+						<el-select v-model="dataForm.datasourceId" style="width: 100%" placeholder="请选择数据源" @change="getTableList">
+							<el-option label="默认数据源" value="0"></el-option>
+							<el-option v-for="ds in dataForm.datasourceList" :key="ds.id" :label="ds.connName" :value="ds.id"> </el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="16">
+					<el-form-item label="表名" prop="tableName" :label-width="80">
+						<!-- 监听tableName值，如果发生变化，则调用getTableList -->
+						<el-input v-model="dataForm.tableName" placeholder="请输入表名" style="width: 100%" @input="getTableList"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
 			<el-table :data="dataForm.tableList" border style="width: 100%" :max-height="400" @selection-change="selectionChangeHandle">
 				<el-table-column type="selection" header-align="center" align="center" width="60"></el-table-column>
 				<el-table-column prop="tableName" label="表名" header-align="center" align="center"></el-table-column>
@@ -31,9 +36,6 @@ import { ElMessage } from 'element-plus/es'
 import { useDataSourceListApi } from '@/api/datasource'
 import { useTableImportSubmitApi } from '@/api/table'
 import { useDataSourceTableListApi } from '@/api/datasource'
-import { useDataSourceTableApi } from '@/api/datasource'
-import { IHooksOptions } from '@/hooks/interface'
-import { useCrud } from '@/hooks'
 
 const emit = defineEmits(['refreshDataList'])
 
@@ -44,19 +46,9 @@ const dataForm = reactive({
 	id: '',
 	tableNameListSelections: [] as any,
 	datasourceId: '',
+	tableName: '',
 	datasourceList: [] as any,
-	tableList: [] as any,
-	table: {
-		tableName: ''
-	}
-})
-
-const state: IHooksOptions = reactive({
-	dataListUrl: '/gen/table/page',
-	deleteUrl: '/gen/table',
-	queryForm: {
-		tableName: ''
-	}
+	tableList: [] as any
 })
 
 // 多选
@@ -85,32 +77,9 @@ const getDataSourceList = () => {
 }
 
 const getTableList = () => {
-	dataForm.table.tableName = ''
-	useDataSourceTableListApi(dataForm.datasourceId).then(res => {
+	useDataSourceTableListApi(dataForm.datasourceId, dataForm.tableName).then(res => {
 		dataForm.tableList = res.data
 	})
-}
-
-// 根据表名查询（支持空表名时查询全表）
-const getDataList = () => {
-	// 如果未选择数据源
-	if (!dataForm.datasourceId) {
-		ElMessage.warning('请先选择数据源')
-		return
-	}
-
-	// 根据表名是否为空，决定调用哪个接口
-	if (state.queryForm.tableName) {
-		// 有表名时调用带表名的接口
-		useDataSourceTableApi(dataForm.datasourceId, state.queryForm.tableName).then(res => {
-			dataForm.tableList = res.data
-		})
-	} else {
-		// 表名为空时调用全量接口
-		useDataSourceTableListApi(dataForm.datasourceId).then(res => {
-			dataForm.tableList = res.data
-		})
-	}
 }
 
 // 表单提交

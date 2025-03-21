@@ -20,10 +20,6 @@ export const useDataSourceSubmitApi = (dataForm: any) => {
 	}
 }
 
-export const useDataSourceTableListApi = (id: string) => {
-	return service.get('/gen/datasource/table/list/' + id)
-}
-
-export const useDataSourceTableApi = (id: string, tableName: string) => {
-	return service.get(`/gen/datasource/table/list/${id}/${tableName}`)
+export const useDataSourceTableListApi = (id: string, tableName: string) => {
+	return service.get(`/gen/datasource/table/list/${id}?tableName=${tableName}`)
 }

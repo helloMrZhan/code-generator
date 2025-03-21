@@ -1,5 +1,6 @@
 package net.maku.generator.controller;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.maku.generator.common.page.PageResult;
@@ -90,29 +91,16 @@ public class DataSourceController {
      * @param id 数据源ID
      */
     @GetMapping("table/list/{id}")
-    public Result<List<TableEntity>> tableList(@PathVariable("id") Long id) {
+    public Result<List<TableEntity>> tableList(@PathVariable("id") Long id, @RequestParam("tableName") String tableName) {
         try {
             // 获取数据源
             GenDataSource datasource = datasourceService.get(id);
             // 根据数据源，获取全部数据表
             List<TableEntity> tableList = GenUtils.getTableList(datasource);
+            // 过滤表名
+            tableList.removeIf(table -> StrUtil.isNotBlank(tableName) && !StrUtil.containsIgnoreCase(table.getTableName(), tableName));
 
             return Result.ok(tableList);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return Result.error("数据源配置错误，请检查数据源配置！");
-        }
-    }
-
-    @GetMapping("table/list/{id}/{tableName}")
-    public Result<TableEntity> tableList(@PathVariable("id")Long id, @PathVariable("tableName")String tableName) {
-        try {
-            // 获取数据源
-            GenDataSource datasource = datasourceService.get(id);
-            // 根据数据源，获取全部数据表
-            TableEntity tableEntity =   GenUtils.getTable(datasource,tableName);
-
-            return Result.ok(tableEntity);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return Result.error("数据源配置错误，请检查数据源配置！");
