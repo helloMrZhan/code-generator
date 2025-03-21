@@ -103,4 +103,19 @@ public class DataSourceController {
             return Result.error("数据源配置错误，请检查数据源配置！");
         }
     }
+
+    @GetMapping("table/list/{id}/{tableName}")
+    public Result<TableEntity> tableList(@PathVariable("id")Long id, @PathVariable("tableName")String tableName) {
+        try {
+            // 获取数据源
+            GenDataSource datasource = datasourceService.get(id);
+            // 根据数据源，获取全部数据表
+            TableEntity tableEntity =   GenUtils.getTable(datasource,tableName);
+
+            return Result.ok(tableEntity);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Result.error("数据源配置错误，请检查数据源配置！");
+        }
+    }
 }
