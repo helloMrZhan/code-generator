@@ -12,6 +12,10 @@
         <version>3.2.0</version>
     </parent>
 
+    <name>maku-generator-boot-starter</name>
+    <description>maku-generator-boot-starter</description>
+    <url>https://github.com/makunet/maku-generator</url>
+
     <dependencies>
         <dependency>
             <groupId>net.maku</groupId>
