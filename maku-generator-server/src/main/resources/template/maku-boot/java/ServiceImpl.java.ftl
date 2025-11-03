@@ -10,7 +10,7 @@ import ${package}.${moduleName}.convert.${ClassName}Convert;
 import ${package}.${moduleName}.entity.${ClassName}Entity;
 import ${package}.${moduleName}.query.${ClassName}Query;
 import ${package}.${moduleName}.vo.${ClassName}VO;
-import ${package}.${moduleName}.dao.${ClassName}Dao;
+import ${package}.${moduleName}.mapper.${ClassName}Mapper;
 import ${package}.${moduleName}.service.${ClassName}Service;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
-public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${ClassName}Entity> implements ${ClassName}Service {
+public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Mapper, ${ClassName}Entity> implements ${ClassName}Service {
 
     @Override
     public PageResult<${ClassName}VO> page(${ClassName}Query query) {

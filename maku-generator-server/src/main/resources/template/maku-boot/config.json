@@ -6,8 +6,8 @@
     "frontendPath": "D:\\generator\\maku-admin"
   },
   "developer": {
-    "author": "阿沐",
-    "email": "babamu@126.com"
+    "author": "zjq",
+    "email": ""
   },
   "templates": [
     {
@@ -39,12 +39,12 @@
       "generatorPath": "${backendPath}/src/main/java/${packagePath}/${moduleName}/convert/${ClassName}Convert.java"
     },
     {
-      "templateName": "java/Dao.java.ftl",
-      "generatorPath": "${backendPath}/src/main/java/${packagePath}/${moduleName}/dao/${ClassName}Dao.java"
+      "templateName": "java/Mapper.java.ftl",
+      "generatorPath": "${backendPath}/src/main/java/${packagePath}/${moduleName}/mapper/${ClassName}Mapper.java"
     },
     {
-      "templateName": "xml/Dao.xml.ftl",
-      "generatorPath": "${backendPath}/src/main/resources/mapper/${moduleName}/${ClassName}Dao.xml"
+      "templateName": "xml/Mapper.xml.ftl",
+      "generatorPath": "${backendPath}/src/main/resources/mapper/${moduleName}/${ClassName}Mapper.xml"
     },
     {
       "templateName": "sql/menu.sql.ftl",
