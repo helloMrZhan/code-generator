@@ -18,13 +18,16 @@
 
     <properties>
         <skipTests>true</skipTests>
-        <mybatisplus.version>3.5.12</mybatisplus.version>
-        <hutool.version>5.8.25</hutool.version>
-        <oracle.version>19.3.0.0</oracle.version>
+        <mybatisplus.version>3.5.2</mybatisplus.version>
+        <mybatis.spring.version>2.3.1</mybatis.spring.version>
+        <hutool.version>5.8.10</hutool.version>
+        <oracle.version>11.2.0.3</oracle.version>
         <freemarker.version>2.3.31</freemarker.version>
+        <sqlserver.version>11.2.1.jre8</sqlserver.version>
         <dameng.version>8.1.2.141</dameng.version>
-        <clickhouse.version>0.3.2</clickhouse.version>
         <kingbase8.version>8.6.0</kingbase8.version>
+        <oracle.version>11.2.0.3</oracle.version>
+        <clickhouse.version>0.3.2</clickhouse.version>
     </properties>
 
     <dependencies>
@@ -38,12 +41,7 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-            <version>${mybatisplus.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatisplus.version}</version>
         </dependency>
         <dependency>
@@ -64,8 +62,8 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
             <version>${oracle.version}</version>
         </dependency>
         <dependency>
@@ -96,6 +94,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- MapStruct 核心API -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.2.Final</version> <!-- 使用最新稳定版 -->
         </dependency>
 
     </dependencies>

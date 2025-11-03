@@ -9,9 +9,9 @@ import net.maku.generator.entity.ProjectModifyEntity;
 import net.maku.generator.service.ProjectModifyService;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 /**

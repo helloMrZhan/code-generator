@@ -1,9 +1,10 @@
 package net.maku.generator.common.query;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * 查询公共参数

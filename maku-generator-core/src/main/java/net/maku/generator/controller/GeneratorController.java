@@ -1,13 +1,13 @@
 package net.maku.generator.controller;
 
 import cn.hutool.core.io.IoUtil;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import net.maku.generator.common.utils.Result;
 import net.maku.generator.service.GeneratorService;
 import net.maku.generator.vo.PreviewVO;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
