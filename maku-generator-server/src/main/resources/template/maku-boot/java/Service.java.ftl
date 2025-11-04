@@ -1,6 +1,6 @@
 package ${package}.${moduleName}.service;
 
-import ${package}.framework.common.utils.PageResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import ${package}.${moduleName}.vo.${ClassName}VO;
 import ${package}.${moduleName}.query.${ClassName}Query;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ${ClassName}Service extends IService<${ClassName}Entity> {
 
-    PageResult<${ClassName}VO> page(${ClassName}Query query);
+    Page<${ClassName}VO> page(${ClassName}Query query);
 
     void save(${ClassName}VO vo);
 

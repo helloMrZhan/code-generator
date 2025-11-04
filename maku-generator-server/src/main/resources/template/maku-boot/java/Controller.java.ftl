@@ -1,10 +1,11 @@
 package ${package}.${moduleName}.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import ${package}.framework.common.utils.PageResult;
-import ${package}.framework.common.utils.Result;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataqin.common.core.domain.CommonResult;
 import ${package}.${moduleName}.convert.${ClassName}Convert;
 import ${package}.${moduleName}.entity.${ClassName}Entity;
 import ${package}.${moduleName}.service.${ClassName}Service;
@@ -25,53 +26,53 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("${moduleName}/${functionName}")
-@Tag(name="${tableComment}")
+@Api(tags = "${tableComment}")
 @AllArgsConstructor
 public class ${ClassName}Controller {
     private final ${ClassName}Service ${className}Service;
 
     @GetMapping("page")
-    @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:page')")
-    public Result<PageResult<${ClassName}VO>> page(@ParameterObject @Valid ${ClassName}Query query){
-        PageResult<${ClassName}VO> page = ${className}Service.page(query);
+    @ApiOperation("分页")
+    //@PreAuthorize("hasAuthority('${moduleName}:${functionName}:page')")
+    public CommonResult<Page<${ClassName}VO>> page(@Valid ${ClassName}Query query){
+        Page<${ClassName}VO> page = ${className}Service.page(query);
 
-        return Result.ok(page);
+        return CommonResult.success(page);
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "信息")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:info')")
-    public Result<${ClassName}VO> get(@PathVariable("id") Long id){
+    @ApiOperation("详情信息")
+    //@PreAuthorize("hasAuthority('${moduleName}:${functionName}:info')")
+    public CommonResult<${ClassName}VO> get(@PathVariable("id") Long id){
         ${ClassName}Entity entity = ${className}Service.getById(id);
 
-        return Result.ok(${ClassName}Convert.INSTANCE.convert(entity));
+        return CommonResult.success(${ClassName}Convert.INSTANCE.convert(entity));
     }
 
     @PostMapping
-    @Operation(summary = "保存")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:save')")
-    public Result<String> save(@RequestBody ${ClassName}VO vo){
+    @ApiOperation("保存")
+    //@PreAuthorize("hasAuthority('${moduleName}:${functionName}:save')")
+    public CommonResult<String> save(@RequestBody ${ClassName}VO vo){
         ${className}Service.save(vo);
 
-        return Result.ok();
+        return CommonResult.success();
     }
 
     @PutMapping
-    @Operation(summary = "修改")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:update')")
-    public Result<String> update(@RequestBody @Valid ${ClassName}VO vo){
+    @ApiOperation("修改")
+    //@PreAuthorize("hasAuthority('${moduleName}:${functionName}:update')")
+    public CommonResult<String> update(@RequestBody @Valid ${ClassName}VO vo){
         ${className}Service.update(vo);
 
-        return Result.ok();
+        return CommonResult.success();
     }
 
     @DeleteMapping
-    @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:delete')")
-    public Result<String> delete(@RequestBody List<Long> idList){
+    @ApiOperation("删除")
+    //@PreAuthorize("hasAuthority('${moduleName}:${functionName}:delete')")
+    public CommonResult<String> delete(@RequestBody List<Long> idList){
         ${className}Service.delete(idList);
 
-        return Result.ok();
+        return CommonResult.success();
     }
 }

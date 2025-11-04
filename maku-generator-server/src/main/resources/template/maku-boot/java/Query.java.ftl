@@ -1,9 +1,9 @@
 package ${package}.${moduleName}.query;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ${package}.framework.common.query.Query;
+import com.dataqin.common.core.domain.param.BasePageCommon;
 import org.springframework.format.annotation.DateTimeFormat;
 
 <#list importList as i>
@@ -18,8 +18,8 @@ import ${i!};
 */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Schema(description = "${tableComment}查询")
-public class ${ClassName}Query extends Query {
+@ApiModel(value = "${ClassName}Query", description = "${tableComment}查询")
+public class ${ClassName}Query extends BasePageCommon {
 <#list queryList as field>
     <#if field.fieldComment!?length gt 0>
     @Schema(description = "${field.fieldComment}")

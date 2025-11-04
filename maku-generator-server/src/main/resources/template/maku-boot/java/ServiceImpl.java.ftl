@@ -4,18 +4,21 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
-import ${package}.framework.common.utils.PageResult;
-import ${package}.framework.mybatis.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ${package}.${moduleName}.convert.${ClassName}Convert;
 import ${package}.${moduleName}.entity.${ClassName}Entity;
 import ${package}.${moduleName}.query.${ClassName}Query;
 import ${package}.${moduleName}.vo.${ClassName}VO;
 import ${package}.${moduleName}.mapper.${ClassName}Mapper;
 import ${package}.${moduleName}.service.${ClassName}Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -27,16 +30,20 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
-public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Mapper, ${ClassName}Entity> implements ${ClassName}Service {
+public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}Entity> implements ${ClassName}Service {
 
     @Override
-    public PageResult<${ClassName}VO> page(${ClassName}Query query) {
-        IPage<${ClassName}Entity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(${ClassName}Convert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+    public Page<${ClassName}VO> page(${ClassName}Query param) {
+        Page<${ClassName}VO> page = new Page<>(param.getPage(), param.getLimit());
+        LambdaQueryWrapper<${ClassName}Entity> queryWrapper = getPageQueryWrapper(param);
+        PageInfo<${ClassName}VO> selectPage = PageHelper.startPage(param.getPage(), param.getLimit())
+                .doSelectPageInfo(() -> baseMapper.queryPageList(queryWrapper));
+        page.setRecords(selectPage.getList());
+        page.setTotal(selectPage.getTotal());
+        return page;
     }
 
-    private LambdaQueryWrapper<${ClassName}Entity> getWrapper(${ClassName}Query query){
+    private LambdaQueryWrapper<${ClassName}Entity> getPageQueryWrapper(${ClassName}Query query){
         LambdaQueryWrapper<${ClassName}Entity> wrapper = Wrappers.lambdaQuery();
         <#list queryList as field>
             <#if field.queryFormType == 'date' || field.queryFormType == 'datetime'>
@@ -66,8 +73,8 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Mapper,
 
     @Override
     public void save(${ClassName}VO vo) {
-        ${ClassName}Entity entity = ${ClassName}Convert.INSTANCE.convert(vo);
-
+        ${ClassName}Entity entity = new ${ClassName}Entity();
+        BeanUtils.copyProperties(vo, entity);
         baseMapper.insert(entity);
     }
 
